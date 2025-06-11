@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.furit.shop.mapper.CategoryMapper">
+	<select id="selectCategoryList" resultType="com.furit.shop.vo.CategoryVO">
+		select * from CATEGORY_INFO
+	</select>
+	<insert id="insertCategory">
+		Insert INTO category_info(CI_NAME,CI_DESC)
+		values(#{ciName},#{ciDesc})
+	</insert>
+	<update id="updateCategory">
+		UPDATE CATEGORY_INFO
+		SET CI_NAME=#{ciName},
+		CI_DESC=#{ciDesc}
+		WHERE CI_NUM=#{ciNum}
+	</update>
+	<delete id="deleteCategory">
+		DELETE FROM CATEGORY_INFO WHERE CI_NUM=#{ciNum}
+	</delete>
+</mapper>
