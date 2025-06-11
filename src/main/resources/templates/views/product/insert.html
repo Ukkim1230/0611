@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/default}">
+
+<body>
+  <th:block layout:fragment="content">
+    <!-- Single Page Header start -->
+    <div class="container-fluid page-header py-5">
+      <h1 class="text-center text-white display-6">Product Insert</h1>
+      <ol class="breadcrumb justify-content-center mb-0">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item"><a href="#">Products</a></li>
+        <li class="breadcrumb-item active text-white">Insert</li>
+      </ol>
+    </div>
+    <!-- Single Page Header End -->
+
+    <!-- Product Insert Form Start -->
+    <div class="container-fluid py-5">
+      <div class="container py-5">
+        <h1 class="mb-4">상품 등록</h1>
+        <form id="productInsertForm" class="row g-4" onsubmit="insertProduct(event)">
+          <div class="col-md-6">
+            <div class="form-item">
+              <label class="form-label">Product Name<sup>*</sup></label> <input type="text" class="form-control" id="piName" name="piName" required>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-item">
+              <label class="form-label">Price<sup>*</sup></label> <input type="number" class="form-control" id="piPrice" name="piPrice" min="0" required>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <div class="form-item">
+              <label class="form-label">요약설명</label>
+              <textarea class="form-control" id="piDesc" name="piDesc" rows="4"></textarea>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-item">
+              <label class="form-label">Unit</label> <input type="text" class="form-control" id="piUnit" name="piUnit" value="KG">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-item">
+              <label class="form-label">Category Number<sup>*</sup></label> <input type="number" class="form-control" id="ciNum" name="ciNum" required>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="form-item">
+              <label class="form-label">Image</label> <input type="file" class="form-control" id="piImg" name="piImg" accept="image/*">
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="form-item">
+              <label class="form-label">상세설명</label>
+              <textarea class="form-control" id="piDesc2" name="piDesc2" rows="4"></textarea>
+            </div>
+          </div>
+          <div class="col-12">
+            <button type="submit" class="btn btn-primary py-3 px-4">등록</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- Product Insert Form End -->
+
+
+    <script>
+		function insertProduct(evt) {
+			evt.preventDefault();
+
+			let formData = new FormData();
+			formData.append('piName', $('#piName').val());
+			formData.append('piPrice', $('#piPrice').val());
+			formData.append('piUnit', $('#piUnit').val());
+			formData.append('ciNum', $('#ciNum').val());
+			formData.append('piDesc', $('#piDesc').val());
+			formData.append('piDesc2', $('#piDesc2').val());
+
+			if ($('#piImg')[0].files.length>0) {
+				formData.append('piImg', $('#piImg')[0].files[0]);
+			}
+
+			$.ajax({
+				url : '/products',
+				type : 'POST',
+				data : formData,
+				processData : false,
+				contentType : false,
+				success : function(response) {
+					alert('상품 추가 완료');
+				},
+				error : function(err) {
+					console.log(err);
+					alert('오류 발생: ' + err);
+				}
+			});
+		}
+	</script>
+  </th:block>
+</body>
+
+</html>
