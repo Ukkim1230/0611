@@ -10,7 +10,6 @@ import lombok.ToString;
 @Setter
 @ToString
 public class ProductVO {
-	
 	private int piNum;
 	private String piName;
 	private String piDesc;

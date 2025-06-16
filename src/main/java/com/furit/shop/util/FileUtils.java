@@ -13,14 +13,17 @@ public class FileUtils {
 
 	@Value("${file.upload.path}")
 	private String fileUploadPath;
-
+	
 	public String saveFile(MultipartFile file, String subDirectory) {
+		if(file==null || file.getSize()==0) {
+			return null;
+		}
 		String fileName = file.getOriginalFilename();
 		int idx = fileName.lastIndexOf(".");
 		String extName = fileName.substring(idx);
 		fileName = subDirectory + "/" + UUID.randomUUID().toString() + extName;
 		File directory = new File(fileUploadPath + subDirectory);
-		if (!directory.exists()) {
+		if(!directory.exists()) {
 			directory.mkdir();
 		}
 		File targetFile = new File(fileUploadPath + fileName);
@@ -33,6 +36,5 @@ public class FileUtils {
 			e.printStackTrace();
 		}
 		return null;
-
 	}
 }

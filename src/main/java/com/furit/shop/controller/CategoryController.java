@@ -17,24 +17,25 @@ import com.furit.shop.vo.CategoryVO;
 @RestController
 public class CategoryController {
 	@Autowired
-	private CategoryService ctService;
+	private CategoryService categoryService;
 	
 	@GetMapping("/categories")
 	public List<CategoryVO> selectCategoryList(CategoryVO category){
-		return ctService.selectCategoryList(category);
+		return categoryService.selectCategoryList(category);
 	}
 	
 	@PostMapping("/categories")
 	public int insertCategory(@RequestBody CategoryVO category) {
-		return ctService.insertCategory(category);
+		return categoryService.insertCategory(category);
 	}
 	
 	@PutMapping("/categories")
 	public int updateCategory(@RequestBody CategoryVO category) {
-		return ctService.insertCategory(category);
+		return categoryService.updateCategory(category);
 	}
+	
 	@DeleteMapping("/categories/{ciNum}")
 	public int deleteCategory(@PathVariable("ciNum") int ciNum) {
-		return ctService.deleteCategory(ciNum);
+		return categoryService.deleteCategory(ciNum);
 	}
 }

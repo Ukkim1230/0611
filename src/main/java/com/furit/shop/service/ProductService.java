@@ -11,23 +11,24 @@ import com.furit.shop.vo.ProductVO;
 
 @Service
 public class ProductService {
+
 	@Autowired
-	private ProductMapper prMapper;
+	private ProductMapper ProductMapper;
 	@Autowired
 	private FileUtils fileUtil;
-
+	
 	public List<ProductVO> selectProductList(ProductVO product){
-		return prMapper.selectProductList(product);
+		return ProductMapper.selectProductList(product);
 	}
 	public int insertProduct(ProductVO product) {
 		product.setPiImgPath(fileUtil.saveFile(product.getPiImg(), "product"));
-		return prMapper.insertProduct(product);
+		return ProductMapper.insertProduct(product);
 	}
 	public int updateProduct(ProductVO product) {
 		product.setPiImgPath(fileUtil.saveFile(product.getPiImg(), "product"));
-		return prMapper.updateProduct(product);
+		return ProductMapper.updateProduct(product);
 	}
-	public int deleteProduct(int piNum) {
-		return prMapper.deleteProduct(piNum);
+	public int deleteProduct(int ciNum) {
+		return ProductMapper.deleteProduct(ciNum);
 	}
 }

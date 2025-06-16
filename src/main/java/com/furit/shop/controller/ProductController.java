@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -16,24 +17,26 @@ import com.furit.shop.vo.ProductVO;
 
 @RestController
 public class ProductController {
-
 	@Autowired
-	private ProductService prService;
+	private ProductService ProductService;
 	
 	@GetMapping("/products")
-	public List<ProductVO> selectProductList(ProductVO product){
-		return prService.selectProductList(product);
+	public List<ProductVO> selectProductList(ProductVO Product){
+		return ProductService.selectProductList(Product);
 	}
+	
 	@PostMapping("/products")
-	public int insertProduct(@RequestBody ProductVO product) {
-		return prService.insertProduct(product);
+	public int insertProduct(@ModelAttribute ProductVO Product) {
+		return ProductService.insertProduct(Product);
 	}
+	
 	@PutMapping("/products")
-	public int updateProduct(@RequestBody ProductVO product) {
-		return prService.updateProduct(product);
+	public int updateProduct(@RequestBody ProductVO Product) {
+		return ProductService.updateProduct(Product);
 	}
+	
 	@DeleteMapping("/products/{piNum}")
 	public int deleteProduct(@PathVariable("piNum") int piNum) {
-		return prService.deleteProduct(piNum);
+		return ProductService.deleteProduct(piNum);
 	}
 }

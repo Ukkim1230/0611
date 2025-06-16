@@ -2,26 +2,38 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.furit.shop.mapper.ProductMapper">
 	<select id="selectProductList" resultType="com.furit.shop.vo.ProductVO">
-		select * from PRODUCT_INFO
+		SELECT PI.*,CI.CI_NAME
+		FROM PRODUCT_INFO PI
+		INNER JOIN CATEGORY_INFO CI
+		ON PI.CI_NUM = CI.CI_NUM
+		<where>
+			<if test='ciNum != null and ciNum !=0'>
+			 AND PI.CI_NUM = #{ciNum}
+			</if>
+		</where>
+		ORDER BY PI.PI_NUM DESC
+		limit 8
 	</select>
 	<insert id="insertProduct">
-		insert into PRODUCT_INFO(PI_NAME,PI_DESC,PI_PRICE,PI_UNIT,PI_IMG_PATH,PI_DESC2,CI_NUM)
-		values(#{piName},#{piDesc},#{piPrice},#{piUnit},#{piImgPath},#{piDesc2},#{ciNum})
+		INSERT INTO PRODUCT_INFO(PI_NAME, PI_PRICE, PI_UNIT, PI_IMG_PATH, CI_NUM,
+		PI_DESC, PI_DESC2)
+		VALUES(#{piName}, #{piPrice}, #{piUnit}, #{piImgPath}, #{ciNum},
+		#{piDesc},#{piDesc2})
 	</insert>
 	<update id="updateProduct">
-		update PRODUCT_INFO
+		UPDATE PRODUCT_INFO
 		SET PI_NAME=#{piName},
+		PI_PRICE=#{piPrice},
+		PI_UNIT=#{piUnit},
 		PI_DESC=#{piDesc},
-		PI_PRICE = #{piPrice},
-		PI_UNIT = #{piUnit},
-		<if test = 'piImgPath != null and piImgPath !=""'>
-		PI_IMG_PATH = #{piImgPath},
-		</if>
 		PI_DESC2=#{piDesc2},
-		CI_NUM = #{CI_NUM}
-		WHERE PI_NUM = #{piNum}
+		<if test='piImgPath != null and piImgPath !=""'>
+			PI_IMG_PATH=#{piImgPath},
+		</if>
+		CI_NUM=#{ciNum}
+		WHERE PI_NUM=#{piNum}
 	</update>
 	<delete id="deleteProduct">
-	delete from PRODUCT_INFO WHERE PI_NUM = #{piNum}
+		DELETE FROM PRODUCT_INFO WHERE PI_NUM=#{piNum}
 	</delete>
 </mapper>

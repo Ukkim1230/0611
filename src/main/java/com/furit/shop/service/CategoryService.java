@@ -10,20 +10,20 @@ import com.furit.shop.vo.CategoryVO;
 
 @Service
 public class CategoryService {
-	
+
 	@Autowired
-	private CategoryMapper caMapper;
+	private CategoryMapper categoryMapper;
 	
 	public List<CategoryVO> selectCategoryList(CategoryVO category){
-		return caMapper.selectCategoryList(category);
+		return categoryMapper.selectCategoryList(category);
 	}
-	public int insertCategory(CategoryVO cateogry) {
-		return caMapper.insertCategory(cateogry);
+	public int insertCategory(CategoryVO category) {
+		return categoryMapper.insertCategory(category);
 	}
-	public int updateCategory(CategoryVO cateogry) {
-		return caMapper.updateCategory(cateogry);
+	public int updateCategory(CategoryVO category) {
+		return categoryMapper.updateCategory(category);
 	}
 	public int deleteCategory(int ciNum) {
-		return caMapper.deleteCategory(ciNum);
+		return categoryMapper.deleteCategory(ciNum);
 	}
 }
