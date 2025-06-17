@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/default}">
+
+<body>
+  <th:block layout:fragment="content">
+    <!-- Single Page Header start -->
+    <div class="container-fluid page-header py-5">
+      <h1 class="text-center text-white display-6">login</h1>
+      <ol class="breadcrumb justify-content-center mb-0">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item"><a href="#">User</a></li>
+        <li class="breadcrumb-item active text-white">login</li>
+      </ol>
+    </div>
+    <!-- Single Page Header End -->
+
+    <!-- Product Insert Form Start -->
+    <div class="container-fluid py-5">
+      <div class="container py-5">
+        <h1 class="mb-4">로그인</h1>
+        <form id="login" class="row g-4" onsubmit="login(event)">
+          <div class="col-12">
+            <div class="form-item">
+              <label class="form-label">ID<sup>*</sup></label> <input type="text" class="form-control" id="uiId" name="uiId" required>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="form-item">
+              <label class="form-label">Password<sup>*</sup></label> <input type="password" class="form-control" id="uiPwd" name="uiPwd"required>
+            </div>
+          </div>
+          <div class="col-10">
+            <button type="submit" class="btn btn-primary py-3 px-4">등록</button>
+          </div>
+          <div class="col-10">
+            <a href="/views/user/join" class="btn btn-primary py-3 px-4">회원가입</a></button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- Product Insert Form End -->
+
+
+    <script>
+		function login(evt) {
+			evt.preventDefault(); //이벤트를 없앰
+			const param = {
+					uiId : $('#uiId').val(),
+					uiPwd : $('#uiPwd').val()
+			}
+
+			$.ajax({
+				url : rootPath + 'users/login',
+				type : 'POST',
+				data : JSON.stringify(param),
+				contentType : 'application/json',
+				success : function(response) {
+					alert(response.uiName + '님 반갑습니다.');
+					window.location.href='/';
+				},
+				error : function(err) {
+					console.log(err);
+					alert('로그인 실패 : ' + err.responseText);
+				}
+			});
+		}
+	</script>
+  </th:block>
+</body>
+
+</html>

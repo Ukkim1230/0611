@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.furit.shop.mapper.UserInfoMapper">
+	<select id="selectUserInfoList" resultType="com.furit.shop.vo.UserInfoVO">
+		select * from USER_INFO
+	</select>
+	<select id="selectUserInfo" resultType="com.furit.shop.vo.UserInfoVO">
+		select * from USER_INFO
+		WHERE UI_NUM = #{uiNum}
+	</select>
+	<select id="selectUserInfoById" resultType="com.furit.shop.vo.UserInfoVO">
+		select * from USER_INFO
+		WHERE UI_ID = #{uiId}
+	</select>
+	<insert id="insertUserInfo" useGeneratedKeys="true" keyColumn="UI_NUM" keyProperty="uiNum">
+		insert into USER_INFO(UI_NAME,UI_ID,UI_PWD,UI_PROFILE_IMG)
+		VALUES(#{uiName},#{uiId},#{uiPwd},#{uiProFileImg})
+	</insert>
+	<update id="updateUserInfo">
+		update User_info
+		set UI_NAME = #{uiName},
+		UI_ID = #{uiId},
+		UI_PWD = #{uiPwd},
+		UI_PROFILE_IMG = #{uiProFileImg}
+		WHERE UI_NUM = #{uiNum}
+	</update>
+	<delete id="deleteUserInfo">
+		delete from User_INFO where UI_NUM = #{uiNum}
+	</delete>
+</mapper>

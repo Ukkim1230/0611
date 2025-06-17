@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/default}">
+
+<body>
+  <th:block layout:fragment="content">
+    <!-- Single Page Header start -->
+    <div class="container-fluid page-header py-5">
+      <h1 class="text-center text-white display-6">수정하기</h1>
+      <ol class="breadcrumb justify-content-center mb-0">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item"><a href="#">User</a></li>
+        <li class="breadcrumb-item active text-white">Join</li>
+      </ol>
+    </div>
+    <!-- Single Page Header End -->
+
+    <!-- Product Insert Form Start -->
+    <div class="container-fluid py-5">
+      <div class="container py-5">
+        <h1 class="mb-4">수정하기</h1>
+        <form id="update" class="row g-4" onsubmit="update(event)">
+          <div class="col-md-6">
+            <div class="form-item">
+              <label class="form-label">이름<sup>*</sup></label> <input type="text" class="form-control" id="uiName" name="uiName" required th:value="${session.user.uiName}">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-item">
+              <label class="form-label">아이디<sup>*</sup></label> <input type="text" class="form-control" id="uiId" name="uiId" required th:value="${session.user.uiId}">
+            </div>
+          </div>
+
+          <div class="col-12">
+            <div class="form-item">
+              <label class="form-label">비밀번호<sup>*</sup></label> <input type="password" class="form-control" id="uiPwd" name="uiPwd" required>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="form-item">
+                     <label class="form-label">프로필</label> <input type="file" class="form-control" id="uiProfile" name="uiProfile" accept="image/*">
+            </div>
+          </div>
+          <div class="col-12">
+            <button type="submit" class="btn btn-primary py-3 px-4">수정</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- Product Insert Form End -->
+<!--
+1.ajax session.user.uiNum
+2.thymeleaf + request
+3. session.user
+-->
+
+    <script>
+		function update(evt) {
+			evt.preventDefault();
+
+			let formData = new FormData();
+			formData.append('uiName', $('#uiName').val());
+			formData.append('uiId', $('#uiId').val());
+			formData.append('uiPwd', $('#uiPwd').val());
+
+			if ($('#uiProfile')[0].files.length>0) {
+				formData.append('uiProfile', $('#uiProfile')[0].files[0]);
+			}
+
+			$.ajax({
+				url : '/users',
+				type : 'PUT',
+				data : formData,
+				processData : false,
+				contentType : false,
+				success : function(response) {
+					alert('수정 완료');
+				},
+				error : function(err) {
+					console.log(err);
+					alert('오류 발생: ' + err);
+				}
+			});
+		}
+	</script>
+  </th:block>
+</body>
+
+</html>
