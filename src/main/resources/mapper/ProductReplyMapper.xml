@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.furit.shop.mapper.ProductReplyMapper">
+	<select id="selectProductReplyList">
+		select * from PRODUCT_Reply_Info
+		<where>
+			<if test='piNum != null and piNum != 0'>
+				AND PI_NUM = #{piNum}
+			</if>
+			<if test='uiNum != null and uiNum != 0'>
+				AND UI_NUM = #{uiNum}
+			</if>
+		</where>
+		ORDER BY PRI_NUM DESC
+	</select>
+	<select id="selectProductReply">
+		select * from Product_Reply_Info
+		WHERE PRI_NUM =
+		#{priNum}
+	</select>
+	<insert id="insertProductReply">
+		INSERT INTO PRODUCT_REPLY_INFO(UI_NUM, PI_NUM, PRI_NAME, PRI_EMAIL,
+		PRI_CONTENT, PRI_RATE)
+		VALUES(#{uiNum}, #{piNum}, #{priName}, #{priEmail}, #{priContent}, #{priRate})
+	</insert>
+	<update id="updateProductReply">
+		update Product_Reply_Info
+		set PRI_NAME = #{priName},
+		PRI_EMAIL = #{priEmail},
+		PRI_CONTENT = #{priContent},
+		PRI_RATE =
+		#{priRate}
+		WHERE PRI_NUM = #{priNum}
+	</update>
+	<delete id="deleteProductReply">
+		delete from Product_Reply_Info WHERE PRI_NUM =
+		#{priNum}
+	</delete>
+</mapper>

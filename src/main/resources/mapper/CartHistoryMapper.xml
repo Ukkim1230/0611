@@ -18,11 +18,11 @@
 		select * from CART_HISTORY_INFO
 		WHERE CHI_NUM = #{chiNum}
 	</select>
-	 <select id="selectCartHistoryByUiNumAndPiNum" resultType="int">
-    SELECT COUNT(1) FROM CART_HISTORY_INFO
-    WHERE UI_NUM = #{uiNum}
-    AND PI_NUM = #{piNum}
-  </select>
+	<select id="selectCartHistoryByUiNumAndPiNum" resultType="int">
+		SELECT COUNT(1) FROM CART_HISTORY_INFO
+		WHERE UI_NUM = #{uiNum}
+		AND PI_NUM = #{piNum}
+	</select>
 	<insert id="insertCartHistory">
 		INSERT INTO CART_HISTORY_INFO(UI_NUM, PI_NUM,
 		CHI_QTY)
@@ -31,16 +31,19 @@
 	<update id="updateCartHistory">
 		UPDATE CART_HISTORY_INFO
 		SET CHI_QTY=#{chiQty}
-		WHERE CHI_NUM = #{chiNum}
-		
+		WHERE
+		CHI_NUM = #{chiNum}
+
 	</update>
 	<update id="updateCartHistoryChiQty">
 		UPDATE CART_HISTORY_INFO
-		SET CHI_QTY= CHI_QTY + #{chiQty}
+		SET CHI_QTY= CHI_QTY +
+		#{chiQty}
 		WHERE UI_NUM = #{uiNum}
 		AND PI_NUM = #{piNum}
 	</update>
 	<delete id="deleteCartHistory">
-		delete from cart_history_info WHERE CHI_NUM = #{chiNum}
+		delete from cart_history_info WHERE CHI_NUM =
+		#{chiNum}
 	</delete>
 </mapper>
