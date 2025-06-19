@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.furit.shop.mapper.UserInfoMapper;
 import com.furit.shop.util.FileUtils;
 import com.furit.shop.util.SHA256Utils;
+import com.furit.shop.util.SessionUtils;
 import com.furit.shop.vo.UserInfoVO;
 
 import jakarta.servlet.http.HttpSession;
@@ -49,6 +50,11 @@ public class UserInfoService {
 		return user;
 	}
 	public int updateUser(UserInfoVO user) {
+		String uiProfilePath = fileUtil.saveFile(user.getUiProfile(), "profile");
+		user.setUiProFileImg(uiProfilePath);
+		uiMapper.updateUserInfo(user);
+		UserInfoVO dbUser = uiMapper.selectUserInfoById(user.getUiId());
+		SessionUtils.getSession().setAttribute("user", dbUser);
 		return uiMapper.updateUserInfo(user);
 	}
 	public int deleteUser(int uiNum) {

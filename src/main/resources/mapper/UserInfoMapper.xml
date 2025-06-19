@@ -21,7 +21,9 @@
 		set UI_NAME = #{uiName},
 		UI_ID = #{uiId},
 		UI_PWD = #{uiPwd},
-		UI_PROFILE_IMG = #{uiProFileImg}
+		<if test='uiProfileImg != null and uiProfileImg !=""'>
+			UI_PROFILE_IMG = #{uiProFileImg}
+		</if>
 		WHERE UI_NUM = #{uiNum}
 	</update>
 	<delete id="deleteUserInfo">

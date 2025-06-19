@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.furit.shop.mapper.CartHistoryMapper">
+	<select id="selectCartHistoryList"
+		resultType="com.furit.shop.vo.CartHistoryVO">
+		select * from CART_HISTORY_INFO
+		<where>
+			<if test='uiNum !=null and uiNum !=0'>
+				AND UI_NUM = #{uiNum}
+			</if>
+			<if test='piNum !=null and piNum !=0'>
+				AND PI_NUM = #{piNum}
+			</if>
+		</where>
+	</select>
+	<select id="selectCartHistory"
+		resultType="com.furit.shop.vo.CartHistoryVO">
+		select * from CART_HISTORY_INFO
+		WHERE CHI_NUM = #{chiNum}
+	</select>
+	<select id="selectCartHistoryByUiNumAndPiNum" resultType="int">
+		SELECT COUNT(1) FROM CART_HISTORY_INFO
+		WHERE UI_NUM = #{uiNum}
+		AND PI_NUM = #{piNum}
+	</select>
+	<insert id="insertCartHistory">
+		INSERT INTO CART_HISTORY_INFO(UI_NUM, PI_NUM,
+		CHI_QTY)
+		VALUES(#{uiNum},#{piNum},#{chiQty})
+	</insert>
+	<update id="updateCartHistory">
+		UPDATE CART_HISTORY_INFO
+		SET CHI_QTY=#{chiQty}
+		WHERE
+		CHI_NUM = #{chiNum}
+
+	</update>
+	<update id="updateCartHistoryChiQty">
+		UPDATE CART_HISTORY_INFO
+		SET CHI_QTY= CHI_QTY +
+		#{chiQty}
+		WHERE UI_NUM = #{uiNum}
+		AND PI_NUM = #{piNum}
+	</update>
+	<delete id="deleteCartHistory">
+		delete from cart_history_info WHERE CHI_NUM =
+		#{chiNum}
+	</delete>
+</mapper>

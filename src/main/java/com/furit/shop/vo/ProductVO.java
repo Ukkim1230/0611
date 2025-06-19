@@ -11,6 +11,7 @@ import lombok.ToString;
 @ToString
 public class ProductVO {
 	private int piNum;
+	private int priRate;
 	private String piName;
 	private String piDesc;
 	private int piPrice;
