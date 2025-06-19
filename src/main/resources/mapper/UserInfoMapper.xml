@@ -1,28 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.furit.shop.mapper.UserInfoMapper">
-	<select id="selectUserInfoList" resultType="com.furit.shop.vo.UserInfoVO">
+	<select id="selectUserInfoList"
+		resultType="com.furit.shop.vo.UserInfoVO">
 		select * from USER_INFO
 	</select>
-	<select id="selectUserInfo" resultType="com.furit.shop.vo.UserInfoVO">
+	<select id="selectUserInfo"
+		resultType="com.furit.shop.vo.UserInfoVO">
 		select * from USER_INFO
 		WHERE UI_NUM = #{uiNum}
 	</select>
-	<select id="selectUserInfoById" resultType="com.furit.shop.vo.UserInfoVO">
+	<select id="selectUserInfoById"
+		resultType="com.furit.shop.vo.UserInfoVO">
 		select * from USER_INFO
 		WHERE UI_ID = #{uiId}
 	</select>
-	<insert id="insertUserInfo" useGeneratedKeys="true" keyColumn="UI_NUM" keyProperty="uiNum">
-		insert into USER_INFO(UI_NAME,UI_ID,UI_PWD,UI_PROFILE_IMG)
+	<insert id="insertUserInfo" useGeneratedKeys="true"
+		keyColumn="UI_NUM" keyProperty="uiNum">
+		insert into
+		USER_INFO(UI_NAME,UI_ID,UI_PWD,UI_PROFILE_IMG)
 		VALUES(#{uiName},#{uiId},#{uiPwd},#{uiProFileImg})
 	</insert>
 	<update id="updateUserInfo">
-		update User_info
-		set UI_NAME = #{uiName},
-		UI_ID = #{uiId},
-		UI_PWD = #{uiPwd},
+		UPDATE USER_INFO
+		SET UI_NAME = #{uiName}
 		<if test='uiProfileImg != null and uiProfileImg !=""'>
-			UI_PROFILE_IMG = #{uiProFileImg}
+			, UI_PROFILE_IMG = #{uiProfileImg}
 		</if>
 		WHERE UI_NUM = #{uiNum}
 	</update>

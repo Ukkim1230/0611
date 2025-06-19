@@ -6,10 +6,7 @@
 </head>
 <body>
 <th:block th:fragment="fruitsshop">
-<div th:text="${param.ciNum==null ? '모든 카테고리':param.ciNum + '만 나와야됨'}">abc</div>
 <!-- Fruits Shop Start-->
-        <div th:text="${categories}"></div>
-    <!-- Fruits Shop Start-->
     <div class="container-fluid fruite py-5">
       <div class="container py-5">
         <div class="tab-class text-center">
@@ -59,8 +56,8 @@
                           </p>
                           <div
                             class="d-flex justify-content-between flex-lg-wrap">
-                            <p class="text-dark fs-5 fw-bold mb-0"><span th:text="${product.piPrice}"></span>원
-                              / <span th:text="${product.piUnit}"></span></p>
+                            <p class="text-dark fs-5 fw-bold mb-0">
+                            <span th:text="${product.piPrice}"></span>원 / <span th:text="${product.piUnit}"></span></p>
                             <a th:if="${session.user !=null}" th:href="${'javascript:void(0);addCart(' + product.piNum +')'}"
                               class="btn border border-secondary rounded-pill px-3 text-primary"><i
                               class="fa fa-shopping-bag me-2 text-primary"></i>
@@ -359,13 +356,13 @@
     		location.href=url + '?piNum=' + obj.getAttribute('data-pi-num');
     	}
     	function addCart(piNum){
-    		alert(piNum);
     		$.ajax({
     			url : rootPath + 'carts',
     			method : 'POST',
     			data : JSON.stringify({piNum:piNum}),
     			contentType : 'application/json',
     			success : function(res){
+    				$('#cartsCnt').text(res);
     				alert('정상적으로 장바구니에 담았습니다.');
     			},
     			error : function(err){

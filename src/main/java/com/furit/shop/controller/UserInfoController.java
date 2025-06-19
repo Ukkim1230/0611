@@ -39,8 +39,8 @@ public class UserInfoController {
 		return uiService.login(user, session);
 	}
 	@PutMapping("/users")
-	public int updateUserInfo(UserInfoVO user) {
-		return uiService.updateUser(user);
+	public int updateUserInfo(UserInfoVO user,HttpSession session) {
+		return uiService.updateUser(user,session);
 	}
 	@DeleteMapping("/users/{uiNum}")
 	public int deleteUserInfo(int uiNum) {

@@ -14,7 +14,7 @@ public class UserInfoVO {
 	private String uiName;
 	private String uiId;
 	private String uiPwd;
-	private String uiProFileImg;
+	private String uiProfileImg;
 	private MultipartFile uiProfile;
 	private String credat;
 	private String cretim;

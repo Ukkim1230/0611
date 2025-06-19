@@ -43,18 +43,18 @@ public class UserInfoService {
 		String uiPwd = user.getUiPwd();
 		uiPwd = SHA256Utils.encodePwd(uiPwd);
 		user.setUiPwd(uiPwd);
-		String uiProfilePath = fileUtil.saveFile(user.getUiProfile(), "profile");
-		user.setUiProFileImg(uiProfilePath);
+		String uiProfileImg = fileUtil.saveFile(user.getUiProfile(), "profile");
+		user.setUiProfileImg(uiProfileImg);
 		uiMapper.insertUserInfo(user);
 		user.setUiProfile(null);
 		return user;
 	}
-	public int updateUser(UserInfoVO user) {
-		String uiProfilePath = fileUtil.saveFile(user.getUiProfile(), "profile");
-		user.setUiProFileImg(uiProfilePath);
+	public int updateUser(UserInfoVO user,HttpSession session) {
+		String uiProfileImg = fileUtil.saveFile(user.getUiProfile(), "profile");
+		user.setUiProfileImg(uiProfileImg);
 		uiMapper.updateUserInfo(user);
 		UserInfoVO dbUser = uiMapper.selectUserInfoById(user.getUiId());
-		SessionUtils.getSession().setAttribute("user", dbUser);
+		session.setAttribute("user", dbUser);
 		return uiMapper.updateUserInfo(user);
 	}
 	public int deleteUser(int uiNum) {
