@@ -7,6 +7,7 @@
    <th:block layout:fragment="content">
         
         <!-- Single Page Header start -->
+  
         <div class="container-fluid page-header py-5">
             <h1 class="text-center text-white display-6">Shop Detail</h1>
             <ol class="breadcrumb justify-content-center mb-0">
@@ -27,14 +28,15 @@
                             <div class="col-lg-6">
                                 <div class="border rounded">
                                     <a href="#">
-                                        <img th:src="@{/img/single-item.jpg}" class="img-fluid rounded" alt="Image">
+                                         <img th:src="@{/files/__${product.piImgPath}__}" 
+                            class="img-fluid w-100 rounded-top" alt="">
                                     </a>
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                                <h4 class="fw-bold mb-3">Brocoli</h4>
-                                <p class="mb-3">Category: Vegetables</p>
-                                <h5 class="fw-bold mb-3">3,35 $</h5>
+                               <h4 class="fw-bold mb-3" th:text="${product.piName}">제품 이름</h4>
+                                <p class="mb-3" th:text="${product.ciName}">카테고리</p>
+                                <h5 class="fw-bold mb-3" th:text="${product.piPrice}">가격</h5>
                                 <div class="d-flex mb-4">
                                     <i class="fa fa-star text-secondary"></i>
                                     <i class="fa fa-star text-secondary"></i>
@@ -42,8 +44,8 @@
                                     <i class="fa fa-star text-secondary"></i>
                                     <i class="fa fa-star"></i>
                                 </div>
-                                <p class="mb-4">The generated Lorem Ipsum is therefore always free from repetition injected humour, or non-characteristic words etc.</p>
-                                <p class="mb-4">Susp endisse ultricies nisi vel quam suscipit. Sabertooth peacock flounder; chain pickerel hatchetfish, pencilfish snailfish</p>
+                                <p class="mb-4" th:text="${product.piDesc}">설명</p>
+                                
                                 <div class="input-group quantity mb-5" style="width: 100px;">
                                     <div class="input-group-btn">
                                         <button class="btn btn-sm btn-minus rounded-circle bg-light border" >
@@ -57,7 +59,7 @@
                                         </button>
                                     </div>
                                 </div>
-                                <a href="#" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                                <a th:href="${'javascript:void(0);addCart(' + product.piNum +')'}" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary" ><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
                             </div>
                             <div class="col-lg-12">
                                 <nav>
@@ -71,11 +73,8 @@
                                     </div>
                                 </nav>
                                 <div class="tab-content mb-5">
-                                    <div class="tab-pane active" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
-                                        <p>The generated Lorem Ipsum is therefore always free from repetition injected humour, or non-characteristic words etc. 
-                                            Susp endisse ultricies nisi vel quam suscipit </p>
-                                        <p>Sabertooth peacock flounder; chain pickerel hatchetfish, pencilfish snailfish filefish Antarctic 
-                                            icefish goldeye aholehole trumpetfish pilot fish airbreathing catfish, electric ray sweeper.</p>
+                                    <div class="tab-pane active" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab" th:text="${product.piDesc2}">
+                                        <p>상세 설명</p>
                                         <div class="px-2">
                                             <div class="row g-4">
                                                 <div class="col-6">
@@ -501,7 +500,24 @@
         </div>
         <!-- Single Product End -->
     
-
+<script>
+function addCart(piNum){
+	alert(piNum);
+	$.ajax({
+		url : rootPath + 'carts',
+		method : 'POST',
+		data : JSON.stringify({piNum:piNum}),
+		contentType : 'application/json',
+		success : function(res){
+			alert('정상적으로 장바구니에 담았습니다.');
+		},
+		error : function(err){
+			console.log(err);
+			alert('오류가 발생하였습니다.');
+		}
+	})
+}
+</script>
         </th:block>
     </body>
 

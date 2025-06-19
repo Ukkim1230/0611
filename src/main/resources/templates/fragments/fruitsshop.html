@@ -39,7 +39,8 @@
                   <div class="row g-4">
                     <th:block th:each="product : ${products}">
                     <div class="col-md-6 col-lg-4 col-xl-3">
-                      <div class="rounded position-relative fruite-item">
+                      <div class="rounded position-relative fruite-item" style="cursor:pointer"
+                      onclick="goPage(this, '/shop-detail')" th:data-pi-num="${product.piNum}"> 
                         <div class="fruite-img">
                         <!--  th:src="@{/files/}" => /files/ + ${product.piImgPath} -->
                           <img th:src="@{/files/__${product.piImgPath}__}" 
@@ -60,7 +61,7 @@
                             class="d-flex justify-content-between flex-lg-wrap">
                             <p class="text-dark fs-5 fw-bold mb-0"><span th:text="${product.piPrice}"></span>원
                               / <span th:text="${product.piUnit}"></span></p>
-                            <a href="#"
+                            <a th:if="${session.user !=null}" th:href="${'javascript:void(0);addCart(' + product.piNum +')'}"
                               class="btn border border-secondary rounded-pill px-3 text-primary"><i
                               class="fa fa-shopping-bag me-2 text-primary"></i>
                               Add to cart</a>
@@ -353,6 +354,27 @@
       </div>
     </div>
     <!-- Fruits Shop End-->
+    <script>
+    	function goPage(obj, url){
+    		location.href=url + '?piNum=' + obj.getAttribute('data-pi-num');
+    	}
+    	function addCart(piNum){
+    		alert(piNum);
+    		$.ajax({
+    			url : rootPath + 'carts',
+    			method : 'POST',
+    			data : JSON.stringify({piNum:piNum}),
+    			contentType : 'application/json',
+    			success : function(res){
+    				alert('정상적으로 장바구니에 담았습니다.');
+    			},
+    			error : function(err){
+    				console.log(err);
+    				alert('오류가 발생하였습니다.');
+    			}
+    		})
+    	}
+    </script>
   </th:block>
 </body>
 </html>

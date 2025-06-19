@@ -26,13 +26,13 @@
           </div>
           <div class="col-md-6">
             <div class="form-item">
-              <label class="form-label">아이디<sup>*</sup></label> <input type="text" class="form-control" id="uiId" name="uiId" required th:value="${session.user.uiId}">
+              <label class="form-label">아이디<sup>*</sup></label> <input type="text" class="form-control" id="uiId" name="uiId" required th:value="${session.user.uiId}" readonly>
             </div>
           </div>
 
           <div class="col-12">
             <div class="form-item">
-              <label class="form-label">비밀번호<sup>*</sup></label> <input type="password" class="form-control" id="uiPwd" name="uiPwd" required>
+              <label class="form-label">비밀번호<sup>*</sup></label> <input type="password" class="form-control" id="uiPwd" name="uiPwd">
             </div>
           </div>
           <div class="col-12">
@@ -54,10 +54,14 @@
 -->
 
     <script>
+    $(document).ready(function(){
+    	$
+    })
 		function update(evt) {
 			evt.preventDefault();
 
 			let formData = new FormData();
+			formData.append('uiNum', $('#uiNum').val());
 			formData.append('uiName', $('#uiName').val());
 			formData.append('uiId', $('#uiId').val());
 			formData.append('uiPwd', $('#uiPwd').val());

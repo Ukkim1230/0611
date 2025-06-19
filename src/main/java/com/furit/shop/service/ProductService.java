@@ -20,6 +20,9 @@ public class ProductService {
 	public List<ProductVO> selectProductList(ProductVO product){
 		return ProductMapper.selectProductList(product);
 	}
+	public ProductVO selectProduct(int piNum){
+		return ProductMapper.selectProduct(piNum);
+	}
 	public int insertProduct(ProductVO product) {
 		product.setPiImgPath(fileUtil.saveFile(product.getPiImg(), "product"));
 		return ProductMapper.insertProduct(product);

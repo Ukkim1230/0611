@@ -14,6 +14,13 @@
 		ORDER BY PI.PI_NUM DESC
 		limit 8
 	</select>
+	<select id="selectProduct" resultType="com.furit.shop.vo.ProductVO">
+		SELECT PI.*,CI.CI_NAME
+		FROM PRODUCT_INFO PI
+		INNER JOIN CATEGORY_INFO CI
+		ON PI.CI_NUM = CI.CI_NUM
+		WHERE PI.PI_NUM = #{piNum}
+	</select>
 	<insert id="insertProduct">
 		INSERT INTO PRODUCT_INFO(PI_NAME, PI_PRICE, PI_UNIT, PI_IMG_PATH, CI_NUM,
 		PI_DESC, PI_DESC2)
