@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/default}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<th:block layout:fragment="content">
+		<!-- Single Page Header start -->
+		<div class="container-fluid page-header py-5">
+			<h1 class="text-center text-white display-6">Shop</h1>
+			<ol class="breadcrumb justify-content-center mb-0">
+				<li class="breadcrumb-item"><a href="#">Home</a></li>
+				<li class="breadcrumb-item"><a href="#">Pages</a></li>
+				<li class="breadcrumb-item active text-white">Shop</li>
+			</ol>
+		</div>
+		<!-- Single Page Header End -->
+
+
+		<!-- Fruits Shop Start-->
+		<div class="container-fluid fruite py-5">
+			<div class="container py-5">
+				<h1 class="mb-4">상품 목록</h1>
+				<form method="GET" action="/shops2">
+					<input type="text" name="searchStr" id="searchStr">
+					<button type="button" onclick="getProducts(1)">검색</button>
+				</form>
+				<table class="table table-bordered">
+					<tr>
+						<th>번호</th>
+						<th>상품</th>
+						<th>가격</th>
+						<th>간단설명</th>
+					</tr>
+					<tbody id="tBody"></tbody>
+				</table>
+				<div class="col-12">
+					<div class="pagination d-flex justify-content-center mt-5" id="pagination">
+						<a href="javascript:void(0);" onclick="goPage(this)" class="rounded">&laquo;</a>
+						<a href="javascript:void(0);" onclick="goPage(this)" class="rounded">1</a>
+						<a href="javascript:void(0);" onclick="goPage(this)" class="rounded">&raquo;</a>
+					</div>
+				</div>
+			</div>
+			<script>
+			const getProducts = function(pNum){
+				$.ajax({
+					url:rootPath + 'ajax-shop?pageNum=' + pNum + '&searchStr=' + $('#searchStr').val(),
+					type :'GET',
+					success : function(res){
+						console.log(res);
+						console.log(res.list);
+						let html ='';
+						for(const product of res.list){
+							html += '<tr>';
+							html += '<td>' + product.piNum + '</td>';
+							html += '<td>' + product.piName + '</td>';
+							html += '<td>' + product.piPrice + '</td>';
+							html += '<td>' + product.piDesc + '</td>';
+							html += '</tr>';
+						}
+						$('#tBody').html(html);
+						
+						let paginationHtml = '';
+						
+						const pageNum = res.pageNum;
+						const pages = res.pages;
+						if(pageNum!==1){
+							paginationHtml = '<a href="javascript:void(0);" onclick="getProducts(' +(pageNum - 1)+ ')" class="rounded">&laquo;</a>';
+						}
+						for(let i=1;i<=pages;i++){
+							const active = i===pageNum?'active':'';
+							paginationHtml = '<a href="javascript:void(0);" onclick="getProducts(' + i + ')" class="rounded ' + active + '">' + i + '</a>'
+						}
+						if(pageNum !== pages){
+							paginationHtml = '<a href="javascript:void(0);" onclick="getProducts(' +(pageNum + 1)+ ')" class="rounded">&raquo;</a>'
+						}
+						$('#pagination').html(paginationHtml);
+					},
+					error : function(err){
+						console.log(err);
+					}
+				})
+			}
+			$(document).ready(function(){
+				getProducts(1);
+			})
+			function goPage(obj){
+				location.href= rootPath + 'shops2?pageNum' + obj.getAttribute('data-num') + '&searchStr=' + $('#searchStr').val();
+			}
+			</script>
+	</th:block>
+</body>
+</html>

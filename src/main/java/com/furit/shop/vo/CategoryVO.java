@@ -9,6 +9,7 @@ import lombok.ToString;
 @ToString
 public class CategoryVO {
 	private int ciNum;
+	private int ciCnt;
 	private String ciName;
 	private String ciDesc;
 }

@@ -2,7 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.furit.shop.mapper.ProductReplyMapper">
 	<select id="selectProductReplyList">
-		select * from PRODUCT_Reply_Info
+		select PRI.*, UI.UI_PROFILE_IMG from product_reply_info pri
+		inner join USER_INFO UI
+		on PRI.UI_NUM = UI.UI_NUM
 		<where>
 			<if test='piNum != null and piNum != 0'>
 				AND PI_NUM = #{piNum}
@@ -19,9 +21,11 @@
 		#{priNum}
 	</select>
 	<insert id="insertProductReply">
-		INSERT INTO PRODUCT_REPLY_INFO(UI_NUM, PI_NUM, PRI_NAME, PRI_EMAIL,
+		INSERT INTO PRODUCT_REPLY_INFO(UI_NUM, PI_NUM,
+		PRI_NAME, PRI_EMAIL,
 		PRI_CONTENT, PRI_RATE)
-		VALUES(#{uiNum}, #{piNum}, #{priName}, #{priEmail}, #{priContent}, #{priRate})
+		VALUES(#{uiNum}, #{piNum},
+		#{priName}, #{priEmail}, #{priContent}, #{priRate})
 	</insert>
 	<update id="updateProductReply">
 		update Product_Reply_Info

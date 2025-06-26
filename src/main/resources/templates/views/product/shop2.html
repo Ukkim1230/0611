@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/default}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<th:block layout:fragment="content">
+		<!-- Single Page Header start -->
+		<div class="container-fluid page-header py-5">
+			<h1 class="text-center text-white display-6">Shop</h1>
+			<ol class="breadcrumb justify-content-center mb-0">
+				<li class="breadcrumb-item"><a href="#">Home</a></li>
+				<li class="breadcrumb-item"><a href="#">Pages</a></li>
+				<li class="breadcrumb-item active text-white">Shop</li>
+			</ol>
+		</div>
+		<!-- Single Page Header End -->
+
+
+		<!-- Fruits Shop Start-->
+		<div class="container-fluid fruite py-5">
+			<div class="container py-5">
+				<h1 class="mb-4">상품 목록</h1>
+				<form method="GET" action="/shops2">
+					<input type="text" name="searchStr" id="searchStr" th:value="${param.searchStr}">
+					<select name="sort" id="sort" onchange="this.form.submit()">
+					 <option value="1" th:selected="${param?.sort?.toString() == '1'}">최신순</option>
+					 <option value="2" th:selected="${param?.sort?.toString() == '2'}">가격 높은순</option>
+					 <option value="3" th:selected="${param?.sort?.toString() == '3'}">가격 낮은순</option>
+					 <option value="4" th:selected="${param?.sort?.toString() == '4'}">등록순</option>
+					</select>
+					<input type="range" name="piPriceRange" id="piPriceRange" min="0" max="100000" step="100" value="0" th:value="${param.piPriceRange == null?'0':param.piPriceRange}"
+					 onchange="$('#divPrice').html(this.value)">
+					 <span id="divPrice" th:text="${param.piPriceRange}"></span>
+					<button>검색</button>
+				</form>
+				<table class="table table-bordered">
+					<tr>
+						<th>번호</th>
+						<th>상품</th>
+						<th>가격</th>
+						<th>간단설명</th>
+					</tr>
+					<tr th:each="product : ${products.list}">
+						<td th:text="${product.piNum}"></td>
+						<td th:text="${product.piName}"></td>
+						<td th:text="${product.piPrice}"></td>
+						<th:block th:if="${#strings.length(product.piDesc)>100}">
+						<td th:text="${#strings.substring(product.piDesc,0,100)} + '...' "></td>
+						</th:block>
+						<th:block th:if="${#strings.length(product.piDesc)<=100}">
+						<td th:text="${product.piDesc}"></td>
+						</th:block>
+					</tr>
+				</table>
+				<div class="col-12">
+					<div class="pagination d-flex justify-content-center mt-5">
+						<a href="javascript:void(0);" onclick="goPage(this)" th:data-num="${products.pageNum-1}" class="rounded" th:if="${products.pageNum!=1}">&laquo;</a>
+						<th:block th:each="num : ${#numbers.sequence(1,__${products.pages}__)}">
+						<a href="javascript:void(0);" onclick="goPage(this)" th:data-num="${num}" class="rounded" th:classappend="${products.pageNum==num?'active':''}" th:text="${num}"></a>
+						</th:block>
+						<a href="javascript:void(0);" onclick="goPage(this)" th:data-num="${products.pageNum+1}" class="rounded" th:if="${products.pageNum!=1}">&raquo;</a>
+					</div>
+				</div>
+			</div>
+			<script>
+			function goPage(obj){
+				alert(obj.getAttribute('data-num'));
+				location.href= rootPath + 'shops2?pageNum=' + obj.getAttribute('data-num') + '&searchStr=' + $('#searchStr').val() + '&sort=' + $('#sort').val();
+			}
+			</script>
+	</th:block>
+</body>
+</html>

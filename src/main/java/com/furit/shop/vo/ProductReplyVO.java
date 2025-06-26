@@ -11,6 +11,7 @@ public class ProductReplyVO {
 	private int priNum;
 	private int uiNum;
 	private int piNum;
+	private String uiProfileImg;
 	private String priName;
 	private String priEmail;
 	private String priContent;

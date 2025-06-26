@@ -19,6 +19,46 @@
 		ORDER BY PI.PI_NUM DESC
 		limit 8
 	</select>
+	<select id="selectProductList2"
+		resultType="com.furit.shop.vo.ProductVO">
+		SELECT PI.*,CI.CI_NAME , IFNULL(PRI.PRI_RATE,0) as PRI_RATE
+		FROM PRODUCT_INFO PI
+		INNER JOIN CATEGORY_INFO CI
+		ON PI.CI_NUM = CI.CI_NUM
+		left outer join(select pi_num, round(avg(pri_rate)) as pri_rate from
+		PRODUCT_REPLY_INFO
+		group by pi_num) PRI
+		on PI.PI_NUM = PRI.PI_NUM
+		<where>
+			<if test='ciNum != null and ciNum !=0'>
+				AND PI.CI_NUM = #{ciNum}
+			</if>
+			<if test='searchStr !=null and searchStr != ""'>
+			AND (PI.PI_NAME LIKE CONCAT('%',#{searchStr},'%') 
+			OR PI.PI_DESC LIKE CONCAT('%',#{searchStr},'%')
+			OR PI.PI_DESC2 LIKE CONCAT('%',#{searchStr},'%')
+			)
+			</if>
+			<if test='piPriceRange != null and piPriceRange != 0'>
+			AND PI.PI_PRICE &lt;= #{piPriceRange} <!-- &lt는< &gt=> -->
+			</if>
+		</where>
+		ORDER BY
+		<if test='sort == null or sort == "" or sort == "1"'>
+		  PI.PI_NUM DESC
+		</if>
+		<if test='sort !=null and sort !=""'>
+		 <if test='sort =="2"'>
+		  PI.PI_PRICE DESC
+		 </if>
+		 <if test='sort =="3"'>
+		  PI.PI_PRICE ASC
+		 </if>
+		 <if test='sort =="4"'>
+		  PI.PI_NUM ASC
+		 </if>
+		</if>
+	</select>
 	<select id="selectProduct"
 		resultType="com.furit.shop.vo.ProductVO">
 		SELECT PI.*,CI.CI_NAME, IFNULL(PRI.PRI_RATE,0) as PRI_RATE
