@@ -68,7 +68,6 @@
 			</div>
 			<script>
 			function goPage(obj){
-				alert(obj.getAttribute('data-num'));
 				location.href= rootPath + 'shops2?pageNum=' + obj.getAttribute('data-num')
 						 + '&searchStr=' + $('#searchStr').val() + '&sort=' + $('#sort').val() +'&piPriceRange=' + $('#piPriceRange').val();
 			}

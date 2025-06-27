@@ -22,7 +22,7 @@ public class ProductVO {
 	private String piImgPath;
 	private MultipartFile piImg;
 	private String piDesc2;
-	private int ciNum;
+	private Integer ciNum;
 	private String ciName;
 	private String ciDesc;
 	private String searchStr;

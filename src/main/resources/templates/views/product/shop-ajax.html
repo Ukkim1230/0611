@@ -26,6 +26,15 @@
 				<h1 class="mb-4">상품 목록</h1>
 				<form method="GET" action="/shops2">
 					<input type="text" name="searchStr" id="searchStr">
+					<select name="sort" id="sort" onchange="getProducts()">
+					 <option value="1">최신순</option>
+					 <option value="2">가격 높은순</option>
+					 <option value="3">가격 낮은순</option>
+					 <option value="4">등록순</option>
+					</select>
+					<input type="range" name="piPriceRange" id="piPriceRange" min="0" value=0 max="100000" step="100"
+					 onchange="getProducts(1);$('#divPrice').html(this.value)">
+					 <span id="divPrice">0</span>
 					<button type="button" onclick="getProducts(1)">검색</button>
 				</form>
 				<table class="table table-bordered">
@@ -47,8 +56,13 @@
 			</div>
 			<script>
 			const getProducts = function(pNum){
+				let url = rootPath + 'ajax-shop?';
+				url += 'pageNum=' + pNum;
+				url += '&searchStr=' + $('#searchStr').val(),
+				url += '&sort=' + $('#sort').val();
+				url += '&piPriceRange=' + $('#piPriceRange').val();
 				$.ajax({
-					url:rootPath + 'ajax-shop?pageNum=' + pNum + '&searchStr=' + $('#searchStr').val(),
+					url : url,
 					type :'GET',
 					success : function(res){
 						console.log(res);
@@ -65,7 +79,6 @@
 						$('#tBody').html(html);
 						
 						let paginationHtml = '';
-						
 						const pageNum = res.pageNum;
 						const pages = res.pages;
 						if(pageNum!==1){

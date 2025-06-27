@@ -3,7 +3,7 @@
 <mapper namespace="com.furit.shop.mapper.ProductMapper">
 	<select id="selectProductList"
 		resultType="com.furit.shop.vo.ProductVO">
-		SELECT PI.*,CI.CI_NAME , IFNULL(PRI.PRI_RATE,0) as PRI_RATE
+		SELECT PI.*,CI.CI_NAME , IFNULL(PRI.PRI_RATE,0) AS PRI_RATE
 		FROM PRODUCT_INFO PI
 		INNER JOIN CATEGORY_INFO CI
 		ON PI.CI_NUM = CI.CI_NUM
@@ -43,19 +43,18 @@
 			AND PI.PI_PRICE &lt;= #{piPriceRange} <!-- &lt는< &gt=> -->
 			</if>
 		</where>
-		ORDER BY
 		<if test='sort == null or sort == "" or sort == "1"'>
-		  PI.PI_NUM DESC
+		 ORDER BY PI.PI_NUM DESC
 		</if>
 		<if test='sort !=null and sort !=""'>
 		 <if test='sort =="2"'>
-		  PI.PI_PRICE DESC
+		  ORDER BY PI.PI_PRICE DESC
 		 </if>
 		 <if test='sort =="3"'>
-		  PI.PI_PRICE ASC
+		  ORDER BY PI.PI_PRICE ASC
 		 </if>
 		 <if test='sort =="4"'>
-		  PI.PI_NUM ASC
+		 ORDER BY PI.PI_NUM ASC
 		 </if>
 		</if>
 	</select>

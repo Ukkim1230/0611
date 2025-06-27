@@ -24,7 +24,7 @@ public class ProductService {
 	}
 	public PageInfo<ProductVO> selectProductList2(ProductVO product){
 		int pageNum = product.getPageNum()==0?1:product.getPageNum();
-		int rowNum = product.getRowNum()==0?3:product.getRowNum();
+		int rowNum = product.getRowNum()==0?9:product.getRowNum();
 		product.setRowNum(rowNum);
 		PageHelper.startPage(pageNum,rowNum);
 		return PageInfo.of(ProductMapper.selectProductList2(product));

@@ -33,8 +33,8 @@ public class ShopController {
 		return "views/shop-detail";
 	}
 	@GetMapping("/shops")
-	public String goShop(Model m) {
-		m.addAttribute("products",pdService.selectProductList(null));
+	public String goShop(Model m, @ModelAttribute ProductVO product) {
+		m.addAttribute("products",pdService.selectProductList2(product));
 		m.addAttribute("categories",categoryService.selectCategoryList(null));
 		return "views/shop";
 	}
