@@ -14,6 +14,9 @@ public class FileUtils {
 	@Value("${file.upload.path}")
 	private String fileUploadPath;
 	
+	@Value("%{file.view.path}")
+	private String fileViewPath;
+	
 	public String saveFile(MultipartFile file, String subDirectory) {
 		if(file==null || file.getSize()==0) {
 			return null;
